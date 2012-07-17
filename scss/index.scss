@@ -1,3 +1,474 @@
 
 @import "compass/reset";
+@import "compass/utilities/sprites";
 
+@import "../img/*.png";
+$img-sprite: sprite-map("../img/*.png");
+
+body, div, span, li, ul {
+	font-size: 12px;
+	font-family: Verdana;
+}
+
+body, html {
+	/* the Tooltip's onBodyClick handler won't get called,
+	 * because the document is too short.
+	 */
+	height: 100%;
+}
+
+input[type="text"] {
+	border: 1px solid transparent;
+	padding: 2px 1px;
+	margin: 4px 0 1px;
+	  
+	&:hover {
+		  border: 1px solid #000000;
+	}
+	
+	&:focus {
+		border: 1px solid #000000;
+		box-shadow: 0 0 2px #da0; 
+	}
+}
+
+.focus {
+    box-shadow: 0 0 2px #da0 !important;
+}
+
+
+/* Intention: disable hover-border (invitation) when a sibling input is focussed 
+ *	-- does not work however
+ *
+ 
+input:focus + input:hover {
+	  border: 1px solid transparent !important;
+}
+*/
+
+
+
+.plot-type {
+	display: inline-block;
+	height: 24px;
+	margin: 4px;
+	width: 32px;
+	
+	background: $img-sprite no-repeat;
+	
+	&.plot-disabled {
+		@include sprite($img-sprite, plot-disabled, false);
+	}
+	
+	&.plot-line-1 {
+		@include sprite($img-sprite, plot-line-1, false);
+	}
+	
+	&.plot-line-2 {
+		@include sprite($img-sprite, plot-line-2, false);
+	}
+		
+	&.plot-line-3 {
+		@include sprite($img-sprite, plot-line-3, false);
+	}
+		
+	&.plot-area {
+		@include sprite($img-sprite, plot-area, false);
+	}	
+}
+
+.min-max-avg {
+	display: inline-block;
+	width: 32px;
+	height: 24px;
+	position: relative;
+	
+	background: $img-sprite no-repeat;
+	@include sprite($img-sprite, min-max-avg-last, false, 0, 0);
+	
+	span {
+		display: inline-block;
+		width: 32px;
+		height: 24px;
+	    left: 0;
+	    margin: 0;
+	    position: absolute;
+	    top: 0;
+		
+		background-repeat: no-repeat;
+	}
+
+	&.avg {
+		span.avg {
+			background-image: $img-sprite;
+			@include sprite($img-sprite, min-max-avg-last_avg, false, 0, 0);
+		}
+	}
+	
+	&.min {
+		span.min {
+			background-image: $img-sprite;
+			@include sprite($img-sprite, min-max-avg-last_min, false, 0, 0);
+		}
+	}
+	
+	&.max {
+		span.max {
+			background-image: $img-sprite;
+			@include sprite($img-sprite, min-max-avg-last_max, false, 0, 0);
+		}
+	}
+
+	&.last {
+		span.last {
+			background-image: $img-sprite;
+			@include sprite($img-sprite, min-max-avg-last_last, false, 0, 0);
+		}
+	}
+	
+}
+
+
+.main-box {
+	margin: 50px 10px 0;
+	border: 1px solid #000;
+	height: 500px;
+	position: relative;
+	float: left;
+}
+
+#perfdata-list {
+
+	width: 380px;
+	
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	
+	li {
+		margin: 0;
+		padding: 0;
+	}
+	
+	.perfdata-item {
+		position: relative;
+
+		background-color: #fff;
+		width: 380px;
+		
+		&.selected {
+			position: relative;
+		
+			&:before, &:after {
+				content: "";
+				display: block;
+				width: 1px;
+				height: 62px;
+				background-color: #000;
+				position: absolute;
+				top: -1px;
+			}
+
+	
+			&:before {
+				left: -2px;
+				box-shadow: -2px 0 4px #000;
+			}
+			
+			&:after {
+				left: 351px;
+				box-shadow: 2px 0 4px #000;
+			}
+		}
+		
+		.perfdata-item-body {
+			width: 350px;
+			height: 60px;
+			border-right: 1px solid #000000;
+			border-bottom: 1px solid #000;
+			
+		}
+	
+		.var-regex, .configs {
+			height: 100%;
+			padding: 0 10px;
+		}
+		
+		.var-regex {
+			padding: 0 10px 0 10px;
+			height: 20px;
+			width: 275px;
+			float: left;
+			  
+			span {
+				display: block;
+				font-weight: bold;
+				margin: 8px 0;
+			}				  
+		}
+		
+		.configs {
+			float: right;
+			width: 35px;
+			
+			.plot-type, .min-max-avg {
+				display: block;
+				margin: 4px;
+			}
+		}
+		
+		&:hover {
+		
+			input[type="text"] {
+				border: 1px solid transparent;
+				padding: 2px 1px;
+				margin: 4px 0 1px;
+				
+				border: 1px solid #000000;
+			}
+			
+			.plot-type, .min-max-avg {
+				box-shadow: 0 0 2px #666; 
+			}
+			
+		}
+		
+	}
+	
+	.btn {
+		outline: none;
+		
+	    background-image: $img-sprite;
+	    background-repeat: no-repeat;
+	}
+	
+	.list-wrap {
+    	width: 350px;
+    	
+    	.perfdata-item {    	
+    		> .tool-btns {
+				display: none;
+				
+			    border: 1px solid #000000;
+			    border-radius: 0 6px 6px 0;
+			    height: 48px;
+			    position: absolute;
+			    right: 4px;
+			    top: 6px;
+			    width: 24px;	
+				
+				.btn {
+				    height: 15px;
+				    
+				    &.up {
+				    	@include sprite($img-sprite, up, false, 3, 0);
+				    }
+				    
+				    &.remove {
+					    border-bottom: 1px solid #000;
+					    border-top: 1px solid #000;
+				    
+				    	@include sprite($img-sprite, remove, false, 3, 0);
+				    }
+
+				    &.down {
+				       	@include sprite($img-sprite, down, false, 3, 0);
+				    }
+
+				}
+			}
+			
+			&:hover > .tool-btns {
+				display: inline-block;
+			}
+    	}
+	}
+	
+	.add-btn {
+	    border: 1px solid #000;
+	    border-radius: 0 0 6px 6px;
+	    display: block;
+	    height: 24px;
+	    margin: 0 auto;
+	    position: relative;
+	    top: -1px;
+	    width: 24px;
+	    
+	    .btn {
+	    	@include sprite($img-sprite, add, false, 4, 4);
+	    }
+	}
+	
+	
+	.btn {
+	    display: inline-block;
+	    width: 24px;
+	    height: 24px;
+	    margin: 0px 0px;
+	    opacity: .5;
+	    
+	    &:hover {
+			opacity: 1;
+		}
+	}
+	 
+}
+
+.tooltip {
+	position: absolute;
+	border-radius: 3px;
+	display: none;
+	padding: 15px;
+	min-width: 100px;
+	min-height: 75px;
+	background-color: #EDF4F7;
+	box-shadow: 2px 2px 4px #666;
+	border: 1px solid #000;
+	  
+	.tip {
+		background: $img-sprite no-repeat;
+		@include img-sprite(tip);
+		  
+		display: block;
+		height: 16px;
+		left: 10px;
+		position: absolute;
+		top: -16px;
+		width: 16px;
+	}
+	
+	.header {
+		font-size: 11px;
+		font-weight: bold;
+		margin-bottom: 3px;	
+	}
+}
+
+
+.color-field {
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid;
+	margin: 3px;
+	cursor: pointer;
+	
+	&:hover {
+		box-shadow: 0 0 2px #666;
+	}
+	
+	&.selected {
+	
+		&:before {
+			content: "";
+			display: block;
+			width: 3px;
+			height: 3px;
+			position: relative;
+			left: 5px;
+			top: 5px;
+			background-color: #333;
+			border: 1px solid transparent;
+			border-radius: 8px;
+			box-shadow: 0 0 2px #666;
+		}
+		
+		&.neg:before {
+			background-color: #eee;
+			box-shadow: 0 0 2px #eee;
+		}
+	}
+}
+
+.plot-tooltip {
+	height: 130px;
+	width: 186px;
+	
+	.plot-types > span {
+		display: inline-block;
+		width: 32px;
+		height: 24px;
+		
+		margin: 2px 2px 10px;
+		
+		border: 1px solid transparent;
+		
+		.plot-type {
+			margin: 0;
+			
+			&:hover {
+				cursor: pointer;
+				box-shadow: 0 0 2px #666;
+			}
+
+		}
+		
+		&.selected {
+			border: 1px solid #000000;
+		}
+		
+		&:first-child {
+			margin-left: 0;
+		}
+		
+		&:last-child {
+			margin-right: 0;
+		}
+	
+	}
+	
+}
+
+.label-tooltip {
+	height: 145px;
+	width: 300px;
+
+	.header {
+		margin-bottom: 8px;
+	}
+
+	> div > div {
+		margin: 0 0 4px;
+	}
+	
+	input {
+		position: relative;
+	}
+	
+	input[type="text"] {
+		border: 1px solid #000;
+		height: 16px;
+		margin: 0 3px;
+		top: -10px;
+	}
+	
+	input[type="checkbox"] {
+		margin: 2px;
+		top: -6px;
+	}
+	
+	.description {
+		width: 170px;
+	}
+	
+	.format {
+		width: 60px;
+	}
+}
+
+#grapher-config {
+	width: 400px;
+	
+	overflow-x: scroll;
+	overflow-y: scroll;
+	
+	pre {
+    	padding: 5px;
+
+		font-family: monospace;
+    	font-size: 13px;
+	}
+}
