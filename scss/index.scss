@@ -5,9 +5,15 @@
 @import "../img/*.png";
 $img-sprite: sprite-map("../img/*.png");
 
+@import "_wizard.scss";
+
 body, div, span, li, ul {
 	font-size: 12px;
 	font-family: Verdana;
+}
+
+a {
+	outline: none;
 }
 
 body, html {
@@ -15,6 +21,12 @@ body, html {
 	 * because the document is too short.
 	 */
 	height: 100%;
+	
+	width: 100%;
+	
+	overflow: hidden;
+	
+	position: relative;
 }
 
 input[type="text"] {
@@ -130,21 +142,27 @@ input:focus + input:hover {
 
 
 .main-box {
-	margin: 50px 10px 0;
-	border: 1px solid #000;
-	height: 500px;
-	position: relative;
-	float: left;
+	margin: 50px auto 0;
 }
 
-#perfdata-list {
+#perfdata-box {
+	overflow-x: hidden;
+	overflow-y: auto;
 
+	height: 100%;
+}
+
+#perfdata-list {	
 	width: 380px;
+	
+	padding-bottom: 50px;
 	
 	ul {
 		margin: 0;
 		padding: 0;
 		list-style: none;
+		
+		border-top: 1px solid #000;
 	}
 	
 	li {
@@ -186,9 +204,9 @@ input:focus + input:hover {
 		.perfdata-item-body {
 			width: 350px;
 			height: 60px;
-			border-right: 1px solid #000000;
+			border-right: 1px solid #000;
 			border-bottom: 1px solid #000;
-			
+			border-left: 1px solid #000;
 		}
 	
 		.var-regex, .configs {
@@ -238,8 +256,6 @@ input:focus + input:hover {
 	}
 	
 	.btn {
-		outline: none;
-		
 	    background-image: $img-sprite;
 	    background-repeat: no-repeat;
 	}
@@ -255,7 +271,7 @@ input:focus + input:hover {
 			    border-radius: 0 6px 6px 0;
 			    height: 48px;
 			    position: absolute;
-			    right: 4px;
+			    right: 3px;
 			    top: 6px;
 			    width: 24px;	
 				
@@ -460,7 +476,8 @@ input:focus + input:hover {
 }
 
 #grapher-config {
-	width: 400px;
+	width: 700px;
+	height: 500px;
 	
 	overflow-x: scroll;
 	overflow-y: scroll;

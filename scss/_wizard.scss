@@ -1,0 +1,154 @@
+
+#perfdata-wiz {
+	width: 600px;
+	height: 450px;
+	border: none;
+}
+
+.wiz-box, .direct-box {
+	background-color: #ddd;
+	box-shadow: 2px 2px #999;
+	
+	height: 100%;
+	float: left;
+	
+	position: relative;
+	
+	z-index: 1;
+	
+	h1 {
+		background-color: #aaa;
+		
+    	font-size: 18px;
+    	font-weight: bold;
+    	
+		margin: 5px 0 10px 5px;
+    	padding: 0 0 5px 5px;
+	}
+	
+	h2 {
+	    color: #333333;
+	    
+	    font-size: 15px;
+	    font-weight: bold;
+	    
+	    margin: 0 5px 5px;
+	    padding: 0 0 5px 5px;
+	}
+	
+	
+	input[type="text"] {
+	    border: 1px solid #666;
+	    border-radius: 3px;
+	    font-size: 18px;
+	    margin: 20px 10px 10px;
+	    padding: 10px 5px;
+	    width: 348px;
+	}
+	
+}
+
+
+.wiz-box {
+	margin-right: 20px;
+	width: 380px;
+}
+
+.direct-box {
+	width: 200px;
+
+}
+
+
+.footer-btn {
+    background-color: #edc;
+    bottom: 1px;
+    box-shadow: 0 2px #876;
+    color: #333;
+    font-size: 14px;
+    margin: 2px 5px;
+    padding: 15px;
+    position: absolute;
+    right: 5px;
+    text-decoration: none;
+    
+    bottom: 10px;
+    
+    &:hover {
+    	background-color: #fed;
+    	
+    	&:after {
+    		border-color: #fed;
+    	}
+    }
+    
+    &:after {
+	    -moz-transform: rotate(45deg);
+	    background-color: #ccc;
+	    border-width: 16px;
+	    border-style: solid;
+	    border-color: #edc;
+	    box-shadow: 2px -2px #876;
+	    content: "";
+	    display: block;
+	    height: 0;
+	    height: 1px;
+	    left: 105px;
+	    position: absolute;
+	    top: 7px;
+	    width: 0;
+	    z-index: -1;
+    }
+}
+
+#slider-box {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	
+	overflow: hidden;
+
+	#slider {
+		height: 100%;
+		width: 300%;
+		position: relative;
+	
+		.main-box-wrap {
+			width: 33.333%;
+			
+			float: left;
+		}
+	}
+	
+}
+
+.tab-ct {
+	height: 42px;
+    bottom: 0;
+    position: fixed;
+    
+	a {
+		position: relative;
+		
+		top: 15px;
+		
+		font-size: 14px;
+		padding: 5px;
+		margin: 2px 5px;
+		text-decoration: none;
+
+		color: #000;
+		
+		&:hover {
+			background-color: #ddd;
+		}
+		
+		&:focus {
+		    border: 5px solid #999;
+		}		
+
+	    border: 5px solid transparent;		
+	}
+}
+

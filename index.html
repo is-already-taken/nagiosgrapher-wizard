@@ -11,16 +11,51 @@
 <script type="text/javascript" src="libs/backbone.js"></script>
 <script type="text/javascript" src="libs/require.js"></script>
 
-
-
-<div id="perfdata-list" class="main-box"></div>
-<div id="grapher-config" class="main-box"></div>
+<div id="slider-box">
+	<div id="slider" style="left: -100%;">
+		<div class="main-box-wrap">
+			<div id="perfdata-wiz" class="main-box">
+				<div class="wiz-box">
+					<h1>Just enter performance data</h1>
+					<h2>And use the wizard to prepare your configs</h2>
+					
+					<input type="text" id="example-perfdata" placeholder="Enter your performance data" />
+				</div>
+				<div class="direct-box">
+					<h1>Enter manually</h1>
+					<h2>Got to the list and add your configs step by step.</h2>
+					<a href="#list" class="footer-btn">Go to the list</a>
+				</div>
+			</div>
+		</div>
+		<div id="perfdata-box" class="main-box-wrap">
+			<div id="perfdata-list" class="main-box"></div>
+		</div>
+		<div class="main-box-wrap">
+			<div id="grapher-config" class="main-box"></div>
+		</div>
+	</div>
+</div>
+<div class="tab-ct">
+	<a href="#wizard">Wizard</a> <a href="#list">List</a> <a href="#configs">Configs</a>
+</div>
 
 <script type="text/javascript">
 $(function(){
   require(["main"], function(App){
       
   });
+  
+  	function slide(target){
+		var idx = target.parent().children().index(target);
+		$("#slider").animate({left: (idx * -100) + "%"}, 500);
+  	}
+  	
+  	slide($('a[href="'+ location.hash +'"]'));
+  
+	$(".tab-ct a").on("click", function(evt){
+		slide($(evt.target));
+	});
 });
 </script>
 
