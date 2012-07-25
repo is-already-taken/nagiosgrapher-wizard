@@ -11,12 +11,12 @@ define(["./PerfdataView"], function(PerfdataView) {
 			var self = this, $listBody, $removeBtn;
 			
 			$listBody = this.$listBody = $('<ul />');
-			$addBtn = $('<span class="add-btn"><a class="btn" href="#"></span>');
+			$addBtn = $('<a class="add-btn" href="#"><span></span>Add new value</a>');
 			
 			this.$el.append($listBody);
 			this.$el.append($addBtn);
 			
-			$addBtn.children().on("click", function(evt){
+			$addBtn.on("click", function(evt){
 				self.onAddClick(evt);
 			});
 			
