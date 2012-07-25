@@ -152,6 +152,13 @@ input:focus + input:hover {
 	height: 100%;
 }
 
+#config-box {
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	height: 100%;
+}
+
 #perfdata-list {	
 	width: 380px;
 	
@@ -476,11 +483,7 @@ input:focus + input:hover {
 }
 
 #grapher-config {
-	width: 700px;
-	height: 500px;
-	
-	overflow-x: scroll;
-	overflow-y: scroll;
+	width: 500px;
 	
 	pre {
     	padding: 5px;
