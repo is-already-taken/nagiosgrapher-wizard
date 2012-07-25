@@ -42,20 +42,11 @@
 
 <script type="text/javascript">
 $(function(){
+	
   require(["main"], function(App){
       
   });
   
-  	function slide(target){
-		var idx = target.parent().children().index(target);
-		$("#slider").animate({left: (idx * -100) + "%"}, 500);
-  	}
-  	
-  	slide($('a[href="'+ location.hash +'"]'));
-  
-	$(".tab-ct a").on("click", function(evt){
-		slide($(evt.target));
-	});
 });
 </script>
 

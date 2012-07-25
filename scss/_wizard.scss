@@ -118,6 +118,10 @@
 			width: 33.333%;
 			
 			float: left;
+			
+			&.no-scrollbar {
+				overflow: hidden;
+			}
 		}
 	}
 	

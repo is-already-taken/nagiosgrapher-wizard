@@ -1,7 +1,8 @@
 
-define(["collections/Perfdatas",
+define(["views/SliderView",
+        "collections/Perfdatas",
         "views/PerfdataListView",
-        "views/NGrapherTextareaView"], function(Perfdatas, PerfdataListView, NGrapherTextareaView) {
+        "views/NGrapherTextareaView"], function(SliderView, Perfdatas, PerfdataListView, NGrapherTextareaView) {
 
 	var perfdatas;
 	
@@ -43,6 +44,40 @@ define(["collections/Perfdatas",
 	
 	$("#perfdata-list").append(pdw.$el);
 	$("#grapher-config").append(textarea.$el);
+	
+	
+	var sliderView = new SliderView();
+	
+	var Router = Backbone.Router.extend({
+
+		routes: {
+			"wizard" : "wizard",
+		    "list"	 : "list",
+		    "configs" : "configs",
+		    ".*"	 : "def"
+		},
+		
+		wizard: function() {
+			sliderView.slideToWizard();
+		},
+		
+		list: function() {
+			sliderView.slideToList();
+		},
+		
+		configs: function() {
+			sliderView.slideToConfigs();
+		},
+		
+		def: function(){
+			this.navigate("wizard");
+		}
+
+	});
+	
+	window.router = new Router();
+	
+	Backbone.history.start();
 	
 	return {
 
