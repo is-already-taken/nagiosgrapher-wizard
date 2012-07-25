@@ -42,6 +42,12 @@ define(["views/SliderView",
 	var pdw = new PerfdataListView({collection: perfdatas}),
 		textarea = new NGrapherTextareaView({collection: perfdatas});
 	
+	perfdatas.on("add", function(){
+		$("#perfdata-box").scrollTop(
+		    $("#perfdata-list").outerHeight()
+		);
+	});
+	
 	$("#perfdata-list").append(pdw.$el);
 	$("#grapher-config").append(textarea.$el);
 	
