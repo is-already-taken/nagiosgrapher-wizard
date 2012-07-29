@@ -21,7 +21,7 @@ define(["./PerfdataView"], function(PerfdataView) {
 			});
 			
 			this.collection.on("add", this.onAdd, this);
-			this.collection.on("sort", this.onSort, this);
+			this.collection.on("sort reset", this.reRender, this);
 			
 			this.addAll();
 		},
@@ -34,7 +34,7 @@ define(["./PerfdataView"], function(PerfdataView) {
 			this.$listBody.append(new PerfdataView({model: model}).$el);
 		},
 		
-		onSort: function(){
+		reRender: function(){
 			this.$listBody.children().remove();
 			this.addAll();
 		},
