@@ -2,45 +2,23 @@
 define(["views/SliderView",
         "collections/Perfdatas",
         "views/PerfdataListView",
-        "views/NGrapherTextareaView"], function(SliderView, Perfdatas, PerfdataListView, NGrapherTextareaView) {
-
-	var perfdatas;
+        "views/WizardView",
+        "views/NGrapherTextareaView",
+        "utils/PerfdataParser"], function(SliderView, Perfdatas, PerfdataListView, WizardView, NGrapherTextareaView, PerfdataParser) {
 	
-	perfdatas = new Perfdatas([{
-		variable: "var1",
-		regex: "/\d+,\d+,(\d+),\d+,\d+,\d+/",
-		plot: {type: "area", color: "#90f"},
-		legends: [
-		          {"function": "AVERAGE", "description": "Avg: "},
-			      {"function": "MIN", "description": "Min: "},
-			      {"function": "MAX", "description": "Max: "},
-			      {"function": "LAST", "description": "Last: ", active: true}
-		]
-	},{
-		variable: "var2",
-		regex: "/\d+,\d+,\d+,\d+,(\d+),\d+/",
-		plot: {type: "line-2", color: "#09f"},
-		legends: [
-		          {"function": "AVERAGE", "description": "Avg: ", active: true},
-			      {"function": "MIN", "description": "Min: "},
-			      {"function": "MAX", "description": "Max: ", active: true},
-			      {"function": "LAST", "description": "Last: ", active: true}
-		]
-	},{
-		variable: "var3",
-		regex: "/\d+,\d+,\d+,(\d+),\d+,\d+/",
-		plot: {type: "line-2", color: "#f90"},
-		legends: [
-		          {"function": "AVERAGE", "description": "Avg: ", active: true},
-			      {"function": "MIN", "description": "Min: "},
-			      {"function": "MAX", "description": "Max: ", active: true},
-			      {"function": "LAST", "description": "Last: ", active: true}
-		]
-	}], {parse: true});
-	
+	var DEFAULTS = {
+			LEGEND: [
+			         {"function": "AVERAGE", "description": "Avg: "},
+			         {"function": "MIN", "description": "Min: "},
+			         {"function": "MAX", "description": "Max: "},
+			         {"function": "LAST", "description": "Last: ", active: true}
+	        ]
+	};
 
-	var pdw = new PerfdataListView({collection: perfdatas}),
-		textarea = new NGrapherTextareaView({collection: perfdatas});
+	var perfdatas = new Perfdatas([]),
+		pdw = new PerfdataListView({collection: perfdatas}),
+		textarea = new NGrapherTextareaView({collection: perfdatas}),
+		wizardView = new WizardView();
 	
 	perfdatas.on("add", function(){
 		$("#perfdata-box").scrollTop(
@@ -68,6 +46,34 @@ define(["views/SliderView",
 		},
 		
 		list: function() {
+			var perfdata,
+				tokens, matchers, variables,
+				rawDatas = [],
+				variable,
+				matcher,
+				i;
+			
+			perfdata = wizardView.getPerfdata();
+			
+			tokens = PerfdataParser.getTokened(perfdata);
+			matchers = PerfdataParser.getMatchers(tokens);
+			variables = PerfdataParser.getVariables(tokens);
+			
+			
+			for (i = 0; i < matchers.length; i++) {
+				variable = variables[i];
+				matcher = matchers[i];
+				
+				rawDatas.push({
+					variable: variable,
+					regex: matcher,
+					plot: {type: "line-2", color: "#f00"},
+					legends: DEFAULTS.LEGEND
+				});
+			}
+			
+			perfdatas.reset(rawDatas, {parse: true});
+			
 			sliderView.slideToList();
 		},
 		

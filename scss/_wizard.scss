@@ -43,15 +43,43 @@
 	    font-size: 18px;
 	    margin: 20px 10px 10px;
 	    padding: 10px 5px;
-	    width: 348px;
+	    width: 568px;
 	}
 	
+}
+
+#perfdata-result-box {
+
+	.result-text {
+		font-size: 14px;
+		margin: 5px 10px;
+	}
+}
+
+#perfdata-highlighter {
+	font-size: 18px;
+	margin: 20px 10px 10px;
+	padding: 10px 5px;
+	
+	span {
+		font-size: 18px;
+	}
+	
+	.no-value {
+		padding: 2px 0;
+	}
+	
+	.value {
+		padding: 2px 5px;
+		background-color: #eee;
+		border-radius: 3px;
+		cursor: pointer;
+	}
 }
 
 
 .wiz-box {
 	margin-right: 20px;
-	width: 380px;
 }
 
 .direct-box {
@@ -93,7 +121,7 @@
 	    display: block;
 	    height: 0;
 	    height: 1px;
-	    left: 105px;
+	    right: -14px;
 	    position: absolute;
 	    top: 7px;
 	    width: 0;
