@@ -142,7 +142,16 @@ input:focus + input:hover {
 
 
 .main-box {
-	margin: 50px auto 0;
+	margin: 20px auto 0;
+}
+
+#perfdata-header {
+	background-color: #ddd;
+	height: 25px;
+	margin: 0 auto;
+	padding: 15px 20px;
+	width: 600px;
+	text-align: center;
 }
 
 #perfdata-box {
@@ -214,6 +223,10 @@ input:focus + input:hover {
 			border-right: 1px solid #000;
 			border-bottom: 1px solid #000;
 			border-left: 1px solid #000;
+			
+			&.highlight {
+				background-color: #fec;
+			}
 		}
 	
 		.var-regex, .configs {

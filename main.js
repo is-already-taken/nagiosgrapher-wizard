@@ -4,7 +4,8 @@ define(["views/SliderView",
         "views/PerfdataListView",
         "views/WizardView",
         "views/NGrapherTextareaView",
-        "utils/PerfdataParser"], function(SliderView, Perfdatas, PerfdataListView, WizardView, NGrapherTextareaView, PerfdataParser) {
+        "views/BoundPerfdataHighlighterView",
+        "utils/PerfdataParser"], function(SliderView, Perfdatas, PerfdataListView, WizardView, NGrapherTextareaView, BoundPerfdataHighlighterView, PerfdataParser) {
 	
 	var DEFAULTS = {
 			LEGEND: [
@@ -18,7 +19,8 @@ define(["views/SliderView",
 	var perfdatas = new Perfdatas([]),
 		pdw = new PerfdataListView({collection: perfdatas}),
 		textarea = new NGrapherTextareaView({collection: perfdatas}),
-		wizardView = new WizardView();
+		wizardView = new WizardView(),
+		boundPerfdataHighlighterView;
 	
 	perfdatas.on("add", function(){
 		$("#perfdata-box").scrollTop(
@@ -73,6 +75,25 @@ define(["views/SliderView",
 			}
 			
 			perfdatas.reset(rawDatas, {parse: true});
+			
+			boundPerfdataHighlighterView = new BoundPerfdataHighlighterView({
+				perfdata: perfdata,
+				tokens: tokens			
+			});
+			
+			boundPerfdataHighlighterView.on("hover", function(state, regex){
+				console.debug("hover-value ", state, regex);
+				
+				pdw.highlightByIndex(regex, state);
+			});
+			
+			perfdatas.on("view:hover", function(hovered, regex, color){
+				console.debug("hover item ", hovered, regex, color);
+				
+				boundPerfdataHighlighterView.highlightByRegEx(regex, color);
+			});
+			
+			$("#perfdata-header").html("").append(boundPerfdataHighlighterView.render().$el);
 			
 			sliderView.slideToList();
 		},

@@ -6,6 +6,10 @@ define(["./PerfdataView"], function(PerfdataView) {
 	return Backbone.View.extend({
 		tagName: "div",
 		className: "list-wrap",
+		
+		events: {
+			"mouseover .perfdata-item-body": "onItemBodyHover"
+		},
 
 		initialize : function() {
 			var self = this, $listBody, $removeBtn;
@@ -33,6 +37,28 @@ define(["./PerfdataView"], function(PerfdataView) {
 		onAdd: function(model){
 			this.$listBody.append(new PerfdataView({model: model}).$el);
 		},
+		
+		onItemBodyHover: function(evt){
+			var target = $(evt.target).parents(".perfdata-item"),
+				idx, model;
+			
+			if (!target.length) {
+				return;
+			}
+			
+			idx = target.parent().children(".perfdata-item").index(target);
+			model = this.collection.at(idx);
+		
+			this.trigger("hover-item", model.attributes.regex);
+		},
+		
+		highlightByIndex: function(regex, state){
+			var model = this.collection.find(function(model){
+				return model.get("regex") == regex;
+			});
+			
+			model.trigger("view:highlight", state);
+		},		
 		
 		reRender: function(){
 			this.$listBody.children().remove();

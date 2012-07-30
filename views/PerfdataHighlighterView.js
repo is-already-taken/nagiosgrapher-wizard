@@ -3,6 +3,8 @@ define(["../utils/PerfdataParser"], function(PerfdataParser) {
 
 	return Backbone.View.extend({
 		
+		matchers: [],
+		
 		initialize: function(){
 			
 		},
@@ -11,7 +13,7 @@ define(["../utils/PerfdataParser"], function(PerfdataParser) {
 			var tokens = this.options.tokens,
 				perfdata = this.options.perfdata,
 				value,
-				matchers = PerfdataParser.getMatchers(tokens),
+				matchers = this.matchers = PerfdataParser.getMatchers(tokens),
 				matcher,
 				i,
 				wrapped = tokens;

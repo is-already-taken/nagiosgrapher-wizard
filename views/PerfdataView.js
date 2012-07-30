@@ -8,6 +8,11 @@ define(["views/PlotTooltip",
 		tagName: "li",
 		className: "perfdata-item",
 		
+		events: {
+			"mouseover .perfdata-item-body": "onItemBodyHover",
+			"mouseout .perfdata-item-body": "onItemBodyUnhover"
+		},
+		
 		template: _.template(
 			 '<div class="var-regex">'
 			+	'<input type="text" value="<%= variable %>" />'
@@ -56,6 +61,8 @@ define(["views/PlotTooltip",
 			model.plot.on("change", this.onPlotTypeChange, this);
 			model.legends.on("change", this.onLegendsChange, this);
 			
+			model.on("view:highlight", this.onHightlight, this);
+			
 			
 			this.$el.find(".configs .min-max-avg, .configs .plot-type").on("click", function(evt){
 				if ($(evt.target).hasClass("plot-type")) {
@@ -74,6 +81,31 @@ define(["views/PlotTooltip",
 			$tools.on("click", ".down", function(evt){
 				self.onDownClick(evt);
 			});
+		},
+		
+		onItemBodyHover: function(evt){
+			var target = $(evt.target).parent(".perfdata-item"),
+			model = this.model;
+			
+			if (!target.length) {
+				return;
+			}
+			
+			this.model.trigger("view:hover", true, model.get("regex"), model.plot.get("color"));
+		},
+		
+		onItemBodyUnhover: function(evt){
+			var model = this.model;
+			
+			if (evt.relatedTarget == evt.target || $(evt.relatedTarget).parents(".perfdata-item-body").is(evt.target)) {
+				return;
+			}
+			
+			this.model.trigger("view:hover", false, model.get("regex"));
+		},
+		
+		onHightlight: function(state){
+			this.$body.toggleClass("highlight", state);
 		},
 		
 		onUpClick: function(){
