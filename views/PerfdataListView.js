@@ -57,6 +57,10 @@ define(["./PerfdataView"], function(PerfdataView) {
 				return model.get("regex") == regex;
 			});
 			
+			if (!model) {
+				return;
+			}
+			
 			model.trigger("view:highlight", state);
 		},		
 		

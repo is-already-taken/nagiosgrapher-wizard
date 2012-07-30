@@ -1,11 +1,10 @@
 
 define(["views/SliderView",
         "collections/Perfdatas",
-        "views/PerfdataListView",
+        "views/ListPageView",
         "views/WizardView",
         "views/NGrapherTextareaView",
-        "views/BoundPerfdataHighlighterView",
-        "utils/PerfdataParser"], function(SliderView, Perfdatas, PerfdataListView, WizardView, NGrapherTextareaView, BoundPerfdataHighlighterView, PerfdataParser) {
+        "utils/PerfdataParser"], function(SliderView, Perfdatas, ListPageView, WizardView, NGrapherTextareaView, PerfdataParser) {
 	
 	var DEFAULTS = {
 			LEGEND: [
@@ -17,22 +16,14 @@ define(["views/SliderView",
 	};
 
 	var perfdatas = new Perfdatas([]),
-		pdw = new PerfdataListView({collection: perfdatas}),
 		textarea = new NGrapherTextareaView({collection: perfdatas}),
+		listpage = new ListPageView({collection: perfdatas}),
 		wizardView = new WizardView(),
-		boundPerfdataHighlighterView;
+		sliderView = new SliderView();
 	
-	perfdatas.on("add", function(){
-		$("#perfdata-box").scrollTop(
-		    $("#perfdata-list").outerHeight()
-		);
-	});
-	
-	$("#perfdata-list").append(pdw.$el);
 	$("#grapher-config").append(textarea.$el);
 	
-	
-	var sliderView = new SliderView();
+	listpage.render();
 	
 	var Router = Backbone.Router.extend({
 
@@ -61,7 +52,6 @@ define(["views/SliderView",
 			matchers = PerfdataParser.getMatchers(tokens);
 			variables = PerfdataParser.getVariables(tokens);
 			
-			
 			for (i = 0; i < matchers.length; i++) {
 				variable = variables[i];
 				matcher = matchers[i];
@@ -76,24 +66,7 @@ define(["views/SliderView",
 			
 			perfdatas.reset(rawDatas, {parse: true});
 			
-			boundPerfdataHighlighterView = new BoundPerfdataHighlighterView({
-				perfdata: perfdata,
-				tokens: tokens			
-			});
-			
-			boundPerfdataHighlighterView.on("hover", function(state, regex){
-				console.debug("hover-value ", state, regex);
-				
-				pdw.highlightByIndex(regex, state);
-			});
-			
-			perfdatas.on("view:hover", function(hovered, regex, color){
-				console.debug("hover item ", hovered, regex, color);
-				
-				boundPerfdataHighlighterView.highlightByRegEx(regex, color);
-			});
-			
-			$("#perfdata-header").html("").append(boundPerfdataHighlighterView.render().$el);
+			listpage.show(perfdata);
 			
 			sliderView.slideToList();
 		},
