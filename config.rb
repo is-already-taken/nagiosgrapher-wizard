@@ -7,7 +7,11 @@ sass_dir = "scss"
 images_dir = "img"
 javascripts_dir = "."
 
-generated_images_dir = "."
+# Hmmm. Since 0.12.2 the path of generated sprites would be '../' 
+# (from project root). Specifying 'img' is a workaround to remove the '../'   
+# (0.11.7 worked more or less as expected)
+# 
+generated_images_dir = "img"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed
