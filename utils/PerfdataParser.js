@@ -10,8 +10,8 @@ define([], function() {
     	 * 
     	 */
     	getTokened: function(str){
-    		return str.replace(/([,;=:\s]|^)\d+([;,\s;]|$)/g, "$1{NNN}$2")
-    	    			.replace(/([;,=:\s]|^)\d+([,;\s;]|$)/g, "$1{NNN}$2");
+    		return str.replace(/([:=,;\s\[\]\(\)\{\}\*]|^)(?:\d+\.)?\d+([\w:=,;\s\[\]\(\)\{\}\*]|$)/g, "$1{NNN}$2")
+						.replace(/([:=,;\s\[\]\(\)\{\}\*]|^)(?:\d+\.)?\d+([\w:=,;\s\[\]\(\)\{\}\*]|$)/g, "$1{NNN}$2");
     	},
     	
     	
@@ -19,6 +19,9 @@ define([], function() {
     		var i = 0, i_ = 0,
     			idx, s, t, r,
     			matchers = [];
+    		
+    		// escape all (but '{' and '}') RegEx meta chars before
+    		str = str.replace(/([\.\/[\]\(\)\?\+\|\*])/g, "\\$1");
     		
     		while (true) {
     			i = str.indexOf("{NNN}", i_);
@@ -30,14 +33,19 @@ define([], function() {
     			s = str.substring(0, i);
     			t = str.substring(i + 5);
     			
-    			r = s.replace(/\{NNN\}/g, "\\d+");
-    			r += "(\\d+)";
-    			r += t.replace(/\{NNN\}/g, "\\d+");
+    			r = s.replace(/\{NNN\}/g, "(?:\\d+?\\.)?\\d+");
+    			r += "((?:\\d+?\\.)?\\d+)";
+    			r += t.replace(/\{NNN\}/g, "(?:\\d+?\\.)?\\d+");
+    			
+    			// escape { and } after replacing the placeholder  
+    			r = r.replace(/([\{\}])/g, "\\$1");
     			
     			matchers.push(r);
     			
     			i_ = i + 5;
     		}
+    		
+    		
     		
     		return matchers;
     	},
