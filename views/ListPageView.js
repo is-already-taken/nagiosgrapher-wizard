@@ -18,7 +18,7 @@ define(["views/PerfdataListView",
 				this.highlighter.highlightByRegEx(regex, color);
 			}, this);
 			
-			this.$list = $el.children("#perfdata-list");
+			this.$list = $el.find("#perfdata-list");
 			this.$header = $el.children("#perfdata-header")
 		},
 		

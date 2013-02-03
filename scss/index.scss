@@ -143,19 +143,25 @@ input:focus + input:hover {
 
 
 .main-box {
-	margin: 20px auto 0;
+	margin: 5px auto 0;
 }
 
 #perfdata-header {
-	background-color: #ddd;
-	height: 25px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+
 	margin: 0 auto;
-	padding: 15px 20px;
-	width: 600px;
+	padding: 10px 20px;
 	text-align: center;
+	background-color: #ddd;
+	border-bottom: 10px solid #fff;
 }
 
 #perfdata-box {
+	position: relative;
+	
 	overflow-x: hidden;
 	overflow-y: auto;
 
@@ -163,10 +169,21 @@ input:focus + input:hover {
 }
 
 #config-box {
+	height: 100%;
+
+	overflow-x: hidden;
+	overflow-y: auto;	
+}
+
+.perfdata-list-scroller {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 65px;
+	bottom: 0;
+	
 	overflow-x: hidden;
 	overflow-y: auto;
-
-	height: 100%;
 }
 
 #perfdata-list {	

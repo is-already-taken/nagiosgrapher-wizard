@@ -5,7 +5,7 @@ define([], function() {
 		tagName: "pre",
 
 		initialize : function() {
-			this.collection.on("add remove sort change legends.change plot.change", this.onChange, this);
+			this.collection.on("reset add remove sort change legends.change plot.change", this.onChange, this);
 		},
 		
 		onChange: function(){
