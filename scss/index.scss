@@ -2,6 +2,7 @@
 @import "compass/reset";
 @import "compass/utilities/sprites";
 
+$img-spacing: 2px;
 @import "../img/*.png";
 $img-sprite: sprite-map("../img/*.png");
 
@@ -190,7 +191,7 @@ input:focus + input:hover {
 		position: relative;
 
 		background-color: #fff;
-		width: 380px;
+		width: 410px;
 		
 		&.selected {
 			position: relative;
@@ -218,8 +219,8 @@ input:focus + input:hover {
 		}
 		
 		.perfdata-item-body {
-			width: 350px;
-			height: 60px;
+			width: 380px;
+			height: 80px;
 			border-right: 1px solid #000;
 			border-bottom: 1px solid #000;
 			border-left: 1px solid #000;
@@ -237,14 +238,20 @@ input:focus + input:hover {
 		.var-regex {
 			padding: 0 10px 0 10px;
 			height: 20px;
-			width: 275px;
+			width: 305px;
 			float: left;
 			  
 			span {
 				display: block;
 				font-weight: bold;
 				margin: 8px 0;
-			}				  
+			}
+			
+			input {
+				padding: 5px 0;
+				margin: 5px 1px;
+				width: 300px;
+			}		  
 		}
 		
 		.configs {
@@ -253,17 +260,21 @@ input:focus + input:hover {
 			
 			.plot-type, .min-max-avg {
 				display: block;
-				margin: 4px;
+				margin: 16px 0;
+			}
+			
+			.plot-type {
+				margin-top: 7px;
+			}
+			
+			.min-max-avg {
+				margin-bottom: 7px;
 			}
 		}
 		
 		&:hover {
 		
 			input[type="text"] {
-				border: 1px solid transparent;
-				padding: 2px 1px;
-				margin: 4px 0 1px;
-				
 				border: 1px solid #000000;
 			}
 			
@@ -281,37 +292,38 @@ input:focus + input:hover {
 	}
 	
 	.list-wrap {
-    	width: 350px;
+    	width: 382px;
     	
-    	.perfdata-item {    	
+    	.perfdata-item {
+    	  	
     		> .tool-btns {
 				display: none;
 				
-			    border: 1px solid #000000;
+			    border: 1px solid #000;
 			    border-radius: 0 6px 6px 0;
-			    height: 52px;
 			    position: absolute;
-			    right: -3px;
-			    top: 3px;
-			    width: 30px;	
+				height: 56px;
+				right: -8px;
+				top: 10px;
+				width: 35px;
 				
 				.btn {
-				    height: 16px;
-				    width: 30px;
+				    height: 18px;
+				    width: 28px;
 				    
 				    &.up {
-				    	@include sprite($img-sprite, up, false, 6, 0);
+				    	@include sprite($img-sprite, up, false, 9, 0);
 				    }
 				    
 				    &.remove {
 					    border-bottom: 1px solid #000;
 					    border-top: 1px solid #000;
 				    
-				    	@include sprite($img-sprite, remove, false, 6, 0);
+				    	@include sprite($img-sprite, remove, false, 9, 0);
 				    }
 
 				    &.down {
-				       	@include sprite($img-sprite, down, false, 6, 0);
+				       	@include sprite($img-sprite, down, false, 9, 0);
 				    }
 
 				}
@@ -334,7 +346,7 @@ input:focus + input:hover {
 		line-height: 50px;
 		margin-top: 10px;
 		text-align: center;
-		width: 350px;
+		width: 380px;
 	    
 	    span {
 	    	display: inline-block;
@@ -359,9 +371,10 @@ input:focus + input:hover {
 	
 	.btn {
 	    display: inline-block;
-	    width: 24px;
-	    height: 24px;
-	    margin: 0px 0px;
+		height: 18px;
+		width: 28px;
+	    margin: 0;
+		padding: 0 4px;
 	    opacity: .5;
 	    
 	    &:hover {
@@ -384,7 +397,7 @@ input:focus + input:hover {
 	  
 	.tip {
 		background: $img-sprite no-repeat;
-		@include img-sprite(tip);
+		@include img-sprite(tip, false, 0, 10);
 		  
 		display: block;
 		height: 16px;
