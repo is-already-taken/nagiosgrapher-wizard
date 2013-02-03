@@ -4,7 +4,8 @@ define(["views/SliderView",
         "views/ListPageView",
         "views/WizardView",
         "views/NGrapherTextareaView",
-        "utils/PerfdataParser"], function(SliderView, Perfdatas, ListPageView, WizardView, NGrapherTextareaView, PerfdataParser) {
+        "utils/PerfdataParser",
+        "views/Colors"], function(SliderView, Perfdatas, ListPageView, WizardView, NGrapherTextareaView, PerfdataParser, Colors) {
 	
 	var DEFAULTS = {
 			LEGEND: [
@@ -44,7 +45,7 @@ define(["views/SliderView",
 				rawDatas = [],
 				variable,
 				matcher,
-				i;
+				i, colors = _.map(Colors, function(value, key){ return key; });
 			
 			perfdata = wizardView.getPerfdata();
 			
@@ -52,14 +53,20 @@ define(["views/SliderView",
 			matchers = PerfdataParser.getMatchers(tokens);
 			variables = PerfdataParser.getVariables(tokens);
 			
+			
 			for (i = 0; i < matchers.length; i++) {
 				variable = variables[i];
 				matcher = matchers[i];
-				
+
+				colors = _.shuffle(colors);
+
 				rawDatas.push({
 					variable: variable,
 					regex: matcher,
-					plot: {type: "line-2", color: "#f00"},
+					plot: {
+						type: "line-2",
+						color: "#" + colors.shift()
+					},
 					legends: DEFAULTS.LEGEND
 				});
 			}

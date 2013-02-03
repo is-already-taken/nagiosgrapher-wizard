@@ -1,4 +1,4 @@
-define([ "./Tooltip" ], function(Tooltip) {
+define([ "./Tooltip", "./Colors" ], function(Tooltip, Colors) {
 
 	return Tooltip.extend({
 		cls : "plot-tooltip",
@@ -13,14 +13,6 @@ define([ "./Tooltip" ], function(Tooltip) {
 			+ '<span><span class="plot-type plot-line-3" style="background-color: #06f"></span></span>'
 			+ '<span><span class="plot-type plot-disabled" style="background-color: #06f"></span></span>'
 			+ '</div>'),
-
-		colors : {
-			// 1|0 = negate (.neg)
-			"000" : 1, "666" : 1, "999" : 0, "f00" : 0, "900" : 1, "600" : 1,
-			"0f0" : 0, "0c0" : 0, "090" : 1, "060" : 1, "ff0" : 0, "fc0" : 0,
-			"f90" : 0, "f60" : 0, "00f" : 1, "009" : 1, "006" : 1, "0ff" : 0,
-			"09f" : 0, "06f" : 1, "f0f" : 0, "90f" : 0, "60f" : 0, "99f" : 0
-		},
 		
 		types: {
 			"plot-area": 1, "plot-line-1": 1, "plot-line-2": 1, "plot-line-3": 1, "plot-disabled": 1
@@ -29,10 +21,10 @@ define([ "./Tooltip" ], function(Tooltip) {
 		initialize : function() {
 			Tooltip.prototype.initialize.apply(this, arguments);
 
-			var $body = this.$body, colors = this.colors, markup, $div1 = $('<div class="color-fields"/>'), cls, self = this;
+			var $body = this.$body, markup, $div1 = $('<div class="color-fields"/>'), cls, self = this;
 
-			for (color in colors) {
-				cls = colors[color] ? "neg" : "";
+			for (color in Colors) {
+				cls = Colors[color] ? "neg" : "";
 				markup = this.fieldTpl({
 					cls : cls,
 					color: "#" + color, // browsers might convert the style to rgb() 
@@ -68,7 +60,7 @@ define([ "./Tooltip" ], function(Tooltip) {
 				typeToSelect = model.get("type"),
 				colorToSelect = model.get("color");
 			
-			this._selectBy(this.colors, $colors, colorToSelect, function(color, toSelect){
+			this._selectBy(Colors, $colors, colorToSelect, function(color, toSelect){
 				return ("#" + color) == toSelect;
 			});
 	
