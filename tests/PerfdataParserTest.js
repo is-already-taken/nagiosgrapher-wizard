@@ -70,7 +70,10 @@ define(["base/utils/PerfdataParser"], function(PerfdataParser2) {
    			 
    			["var1=345,64;var2=56,5;var3=7,54",
 			 	["var1", "var1_1", "var2", "var2_1", "var3", "var3_1"] 
-			 ]
+			 ],
+			 
+			["/var/log=34353MB [var]=3,4.553;22.0 +var=[123,456] *var={12,22} var.a=2 var.b=0 ?",
+			 	["var_log", "var", "var_1", "var_2", "var_3", "var_4", "var_5", "var_6", "var_a", "var_b"]]
    		];
 		
 		

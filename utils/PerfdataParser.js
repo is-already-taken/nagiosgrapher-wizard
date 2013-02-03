@@ -74,18 +74,31 @@ define([], function() {
     		    // if not, the last variable is suffixed with a counter (A) 
     		    // which is incremented every time the intermediate string does
     		    // not contain a variable assignment
-    		    // TODO test for other assignments
+    		    // TODO Test for other types of assignment?
     		    if (interStr.indexOf("=") != -1) {
-    		    	variableNo = 0;
+    		    	variable = interStr.toLowerCase();
 
-    		        variable = /([^:;,.=\s]+)=/.exec(interStr)[1];
+    		    	// If the string contains \w that might be part of the last 
+    		    	// performance data token. Assuming that it's separated by
+    		    	// a separation char and returning part of the right hand 
+    		    	// side.
+    		    	variable = variable.replace(/^.*[;,\s]([^;,\s]+)$/, "$1");
+    		    	
+    		    	// Replace non word/digit chars to underscore, trim 
+    		    	// underscore
+    		        variable = variable.replace(/[^\d\w_]+/g, "_")
+    		        					.replace(/^_/, "").replace(/_$/, "");
 
     		        if (variable_ != variable) {
+    		        	variableNo = 0;
     		        	variables.push(variable);
+    		        } else {
+    		        	variableNo++;
+    		        	variables.push(variable + "_" + variableNo);
     		        }
     		    } else {
     		    	variableNo++;
-    		    	variables.push(variable + "_" + (variableNo));
+    		    	variables.push(variable + "_" + variableNo);
     		    }
 
     		    variable_ = variable;
