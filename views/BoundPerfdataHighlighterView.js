@@ -25,7 +25,13 @@ define(["./PerfdataHighlighterView"], function(PerfdataHighlighterView) {
 		highlightByRegEx: function(regex, color){
 			var matchers = this.matchers,
 				idx = _.indexOf(matchers, regex),
-				$value = this.$el.find(".value").eq(idx);
+				$value;
+			
+			if (idx == -1) {
+				return;
+			}
+			
+			$value = this.$el.find(".value").eq(idx);
 			
 			if (color) {
 				$value.attr("style", "background-color: " + color);
