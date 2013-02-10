@@ -3,18 +3,7 @@ define(["views/SliderView",
         "collections/Perfdatas",
         "views/ListPageView",
         "views/WizardView",
-        "views/NGrapherTextareaView",
-        "utils/PerfdataParser",
-        "views/Colors"], function(SliderView, Perfdatas, ListPageView, WizardView, NGrapherTextareaView, PerfdataParser, Colors) {
-	
-	var DEFAULTS = {
-			LEGEND: [
-			         {"function": "AVERAGE", "description": "Avg: "},
-			         {"function": "MIN", "description": "Min: "},
-			         {"function": "MAX", "description": "Max: "},
-			         {"function": "LAST", "description": "Last: ", active: true}
-	        ]
-	};
+        "views/NGrapherTextareaView"], function(SliderView, Perfdatas, ListPageView, WizardView, NGrapherTextareaView) {
 
 	var perfdatas = new Perfdatas([]),
 		textarea = new NGrapherTextareaView({collection: perfdatas}),
@@ -40,41 +29,6 @@ define(["views/SliderView",
 		},
 		
 		list: function() {
-			var perfdata,
-				tokens, matchers, variables,
-				rawDatas = [],
-				variable,
-				matcher,
-				i, colors = _.map(Colors, function(value, key){ return key; });
-			
-			perfdata = wizardView.getPerfdata();
-			
-			tokens = PerfdataParser.getTokened(perfdata);
-			matchers = PerfdataParser.getMatchers(tokens);
-			variables = PerfdataParser.getVariables(tokens);
-			
-			
-			for (i = 0; i < matchers.length; i++) {
-				variable = variables[i];
-				matcher = matchers[i];
-
-				colors = _.shuffle(colors);
-
-				rawDatas.push({
-					variable: variable,
-					regex: matcher,
-					plot: {
-						type: "line-2",
-						color: "#" + colors.shift()
-					},
-					legends: DEFAULTS.LEGEND
-				});
-			}
-			
-			perfdatas.reset(rawDatas, {parse: true});
-			
-			listpage.show(perfdata);
-			
 			sliderView.slideToList();
 		},
 		
@@ -84,6 +38,14 @@ define(["views/SliderView",
 		
 		def: function(){
 			this.navigate("wizard");
+		},
+		
+		resetPerfdata: function(datas){
+			perfdatas.reset(datas, {parse: true});
+		},
+		
+		getListpage: function(){
+			return listpage;
 		}
 
 	});

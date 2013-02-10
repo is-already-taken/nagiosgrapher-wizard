@@ -1,11 +1,25 @@
 
-define(["../utils/PerfdataParser", "../views/PerfdataHighlighterView"], function(PerfdataParser, PerfdataHighlighterView) {
+define(["../utils/PerfdataParser", 
+        "../views/PerfdataHighlighterView",
+        "../views/Colors"], 
+        function(PerfdataParser, PerfdataHighlighterView, Colors) {
 
+	
+	var DEFAULTS = {
+			LEGEND: [
+			         {"function": "AVERAGE", "description": "Avg: "},
+			         {"function": "MIN", "description": "Min: "},
+			         {"function": "MAX", "description": "Max: "},
+			         {"function": "LAST", "description": "Last: ", active: true}
+	        ]
+	};
+	
 	return Backbone.View.extend({
 		el: "#perfdata-wiz",
 		
 		events: {
-			"submit form": "onSubmit"
+			"submit form": "onSubmit",
+			"click .footer-btn": "onClickContinue"
 		},
 				
 		initialize: function(){
@@ -47,9 +61,44 @@ define(["../utils/PerfdataParser", "../views/PerfdataHighlighterView"], function
 			}
 							
 			return false;
+		},
+		
+		
+		onClickContinue: function(){
+			var perfdata,
+				tokens, matchers, variables,
+				rawDatas = [],
+				variable,
+				matcher,
+				i, colors = _.map(Colors, function(value, key){ return key; });
+			
+			perfdata = this.getPerfdata();
+			
+			tokens = PerfdataParser.getTokened(perfdata);
+			matchers = PerfdataParser.getMatchers(tokens);
+			variables = PerfdataParser.getVariables(tokens);
+			
+			for (i = 0; i < matchers.length; i++) {
+				variable = variables[i];
+				matcher = matchers[i];
+	
+				colors = _.shuffle(colors);
+	
+				rawDatas.push({
+					variable: variable,
+					regex: matcher,
+					plot: {
+						type: "line-2",
+						color: "#" + colors.shift()
+					},
+					legends: DEFAULTS.LEGEND
+				});
+			}
+			
+			router.getListpage().show(perfdata);
+			
+			router.resetPerfdata(rawDatas);
 		}
-		
-		
 	
 	});
 	
