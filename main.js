@@ -1,13 +1,13 @@
 
 define(["views/SliderView",
-        "collections/Perfdatas",
+        "models/NGrapher",
         "views/ListPageView",
         "views/WizardView",
-        "views/NGrapherTextareaView"], function(SliderView, Perfdatas, ListPageView, WizardView, NGrapherTextareaView) {
+        "views/NGrapherTextareaView"], function(SliderView, NGrapher, ListPageView, WizardView, NGrapherTextareaView) {
 
-	var perfdatas = new Perfdatas([]),
-		textarea = new NGrapherTextareaView({collection: perfdatas}),
-		listpage = new ListPageView({collection: perfdatas}),
+	var ngrapher = new NGrapher(),
+		textarea = new NGrapherTextareaView({model: ngrapher}),
+		listpage = new ListPageView({collection: ngrapher.perfdatas}),
 		wizardView = new WizardView(),
 		sliderView = new SliderView();
 	
@@ -40,10 +40,6 @@ define(["views/SliderView",
 			this.navigate("wizard");
 		},
 		
-		resetPerfdata: function(datas){
-			perfdatas.reset(datas, {parse: true});
-		},
-		
 		getListpage: function(){
 			return listpage;
 		}
@@ -51,6 +47,7 @@ define(["views/SliderView",
 	});
 	
 	window.router = new Router();
+	window.ngrapher = ngrapher;
 	
 	Backbone.history.start();
 	

@@ -19,8 +19,8 @@
 					<h1>Just enter your performance data</h1>
 					<h2>And let the list of performance data matcher be created for you.</h2>
 					
-					<form>
-						<input type="text" id="example-perfdata" placeholder="Enter your performance data" />
+					<form id="perfdata-sample-form">
+						<input type="text" placeholder="Enter your performance data" />
 					</form>
 					
 					<div id="perfdata-result-box">
@@ -29,6 +29,10 @@
 								
 						</div>
 					</div>
+
+					<form id="service-name-form">
+						<input type="text" placeholder="Enter the name of the service (service_name)" pattern="[a-zA-Z0-9_]{3,20}" required />
+					</form>
 					
 					<a href="#list" class="footer-btn">Use it to build the config</a>
 				</div>

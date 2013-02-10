@@ -5,11 +5,12 @@ define([], function() {
 		tagName: "pre",
 
 		initialize : function() {
-			this.collection.on("reset add remove sort change legends.change plot.change", this.onChange, this);
+			this.model.on("change", this.onChange, this);
+			this.model.perfdatas.on("reset add remove sort change legends.change plot.change", this.onChange, this);
 		},
 		
 		onChange: function(){
-			var str = this.collection.toNgrapherCfg({serviceName: "myservice", units: "secs"});
+			var str = this.model.toNgrapherCfg();
 			this.$el.html(str);			
 		}
 	
