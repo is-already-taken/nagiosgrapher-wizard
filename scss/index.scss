@@ -208,7 +208,7 @@ input:focus + input:hover {
 		position: relative;
 
 		background-color: #fff;
-		width: 410px;
+		width: 382px;
 		
 		&.selected {
 			position: relative;
@@ -241,6 +241,8 @@ input:focus + input:hover {
 			border-right: 1px solid #000;
 			border-bottom: 1px solid #000;
 			border-left: 1px solid #000;
+			
+			cursor: move;
 			
 			&.highlight {
 				background-color: #fec;
@@ -303,6 +305,17 @@ input:focus + input:hover {
 		
 	}
 	
+	.perfdata-item-placeholder {
+		display: block;
+		height: 80px;
+
+		background: none repeat scroll 0 0 #DDDDDD;
+		border-color: -moz-use-text-color #000000 #000000;
+		border-right: 1px solid #000000;
+		border-style: none solid solid;
+		border-width: medium 1px 1px;
+	}
+	
 	.btn {
 	    background-image: $img-sprite;
 	    background-repeat: no-repeat;
@@ -310,40 +323,6 @@ input:focus + input:hover {
 	
 	.list-wrap {
     	width: 382px;
-    	
-    	.perfdata-item {
-    	  	
-    		> .tool-btns {
-				display: none;
-				
-			    border: 1px solid #000;
-			    border-radius: 0 6px 6px 0;
-			    position: absolute;
-				height: 41px;
-				right: -8px;
-				top: 19px;
-				width: 35px;
-				
-				.btn {
-				    height: 20px;
-				    width: 28px;
-				    
-				    &.up {
-				    	border-bottom: 1px solid #000;
-				    	@include sprite($img-sprite, up, false, 9, 2);
-				    }
-
-				    &.down {
-				       	@include sprite($img-sprite, down, false, 9, 2);
-				    }
-
-				}
-			}
-			
-			&:hover > .tool-btns {
-				display: inline-block;
-			}
-    	}
 	}
 	
 	.add-btn {

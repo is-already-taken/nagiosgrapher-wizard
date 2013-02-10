@@ -29,21 +29,13 @@ define(["views/PlotTooltip",
 			+'</div>'
 		),
 		
-		toolBtnsTpl: _.template(
-			 '<span class="tool-btns">'
-			+'<a class="btn up" href="javascript: void(0);"></a>'
-			+'<a class="btn down" href="javascript: void(0);"></a>'
-			+'</span>'
-		),
-
 		initialize : function() {
-			var self = this, $body, $tools, model = this.model, legends = "";
+			var self = this, $body, model = this.model, legends = "";
 			
 			$body = this.$body = $('<div class="perfdata-item-body" />');
-			$tools = this.$tools = $(this.toolBtnsTpl());
 			
 			this.$el.append($body);
-			this.$el.append($tools);
+			this.$el.attr("data-model-cid", model.cid);
 			
 			$body.append(this.template({
 				variable: model.get("variable"),
@@ -70,14 +62,6 @@ define(["views/PlotTooltip",
 					self.onLegendsClick.call(self, evt);
 				}				
 			});
-			
-			$tools.on("click", ".up", function(evt){
-				self.onUpClick(evt);
-			});
-			
-			$tools.on("click", ".down", function(evt){
-				self.onDownClick(evt);
-			});
 		},
 		
 		onItemBodyHover: function(evt){
@@ -103,14 +87,6 @@ define(["views/PlotTooltip",
 		
 		onHightlight: function(state){
 			this.$body.toggleClass("highlight", state);
-		},
-		
-		onUpClick: function(){
-			this.model.moveUp();
-		},
-		
-		onDownClick: function(){
-			this.model.moveDown();
 		},
 		
 		_getPlotTypeCssClass: function(){

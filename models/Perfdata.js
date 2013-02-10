@@ -7,14 +7,6 @@ define(["./Plot", "../collections/Legends", "text!../templates/plot-cfg.tpl"], f
 			regex: ""
 		},
 		
-		moveUp: function(){
-			this.collection.moveUp(this);
-		},
-		
-		moveDown: function(){
-			this.collection.moveDown(this);
-		},
-		
 		parse: function(data){
 			this.plot = new Plot(data.plot, {parse: true});
 			this.legends = new Legends(data.legends, {parse: true});

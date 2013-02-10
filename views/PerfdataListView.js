@@ -19,9 +19,38 @@ define(["./PerfdataView"], function(PerfdataView) {
 			this.$el.append($listBody);
 			
 			this.collection.on("add", this.onAdd, this);
-			this.collection.on("sort reset", this.reRender, this);
+			this.collection.on("reset", this.reRender, this);
+			
+			this._initSortable();
 			
 			this.addAll();
+		},
+		
+		_initSortable: function(){
+			var self = this;
+			this.$listBody.sortable({
+				placeholder: "perfdata-item-placeholder",
+				stop: function(event, ui){
+					self.onSortet(event, ui);
+				}
+			});
+		},
+		
+		onSortet: function(event, ui){
+			var self = this,
+				$items = this.$listBody.children(),
+				pos = 0;
+				
+			$items.each(function(idx, itemEl){
+				var cid = $(itemEl).attr("data-model-cid"),
+					model = self.collection.getByCid(cid);
+				
+				model.set("position", pos);
+				
+				pos++;
+			});
+			
+			this.collection.sort();
 		},
 		
 		onAdd: function(model){
