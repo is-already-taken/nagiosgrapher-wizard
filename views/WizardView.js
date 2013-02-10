@@ -31,11 +31,11 @@ define(["../utils/PerfdataParser", "../views/PerfdataHighlighterView"], function
 			console.debug(tokens, matchers);
 			
 			if (!matchers.length) {
-				this.$btn.text("Build manually");
+				this.$btn.hide()
 				this.$resultText.text("Unable to detect any values within this perfdata");
 				this.$data.html("");
 			} else {
-				this.$btn.text("Use it to build the config");
+				this.$btn.show().text("Use it to build the config");
 				this.$resultText.text("Great, we've detected Perfdata with " + matchers.length + " values");
 				
 				this.$data.html(

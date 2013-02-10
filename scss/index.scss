@@ -319,28 +319,22 @@ input:focus + input:hover {
 			    border: 1px solid #000;
 			    border-radius: 0 6px 6px 0;
 			    position: absolute;
-				height: 56px;
+				height: 41px;
 				right: -8px;
-				top: 10px;
+				top: 19px;
 				width: 35px;
 				
 				.btn {
-				    height: 18px;
+				    height: 20px;
 				    width: 28px;
 				    
 				    &.up {
-				    	@include sprite($img-sprite, up, false, 9, 0);
-				    }
-				    
-				    &.remove {
-					    border-bottom: 1px solid #000;
-					    border-top: 1px solid #000;
-				    
-				    	@include sprite($img-sprite, remove, false, 9, 0);
+				    	border-bottom: 1px solid #000;
+				    	@include sprite($img-sprite, up, false, 9, 2);
 				    }
 
 				    &.down {
-				       	@include sprite($img-sprite, down, false, 9, 0);
+				       	@include sprite($img-sprite, down, false, 9, 2);
 				    }
 
 				}

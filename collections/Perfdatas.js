@@ -4,20 +4,6 @@ define(["../models/Perfdata"], function(Perfdata) {
 	return Backbone.Collection.extend({
 		model : Perfdata,
 		
-		create: function(){
-			this.add(new Perfdata({
-				variable: "var",
-				regex: "//",
-				plot: {type: "line-1", color: "#90f"},
-				legends: [
-				          {"function": "AVERAGE", "description": "Avg: "},
-					      {"function": "MIN", "description": "Min: "},
-					      {"function": "MAX", "description": "Max: "},
-					      {"function": "LAST", "description": "Last: ", active: true}
-				]
-			}, {parse: true}));
-		},
-		
 		moveUp: function(model){
 			var collection = model.collection,
 				idx = collection.indexOf(model);

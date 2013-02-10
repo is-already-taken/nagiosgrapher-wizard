@@ -31,9 +31,8 @@ define(["views/PlotTooltip",
 		
 		toolBtnsTpl: _.template(
 			 '<span class="tool-btns">'
-			+'<a class="btn up" href="#"></a>'
-			+'<a class="btn remove" href="#"></a>'
-			+'<a class="btn down" href="#"></a>'
+			+'<a class="btn up" href="javascript: void(0);"></a>'
+			+'<a class="btn down" href="javascript: void(0);"></a>'
 			+'</span>'
 		),
 
@@ -75,9 +74,7 @@ define(["views/PlotTooltip",
 			$tools.on("click", ".up", function(evt){
 				self.onUpClick(evt);
 			});
-			$tools.on("click", ".remove", function(evt){
-				self.onRemoveClick(evt);
-			});
+			
 			$tools.on("click", ".down", function(evt){
 				self.onDownClick(evt);
 			});
@@ -112,10 +109,6 @@ define(["views/PlotTooltip",
 			this.model.moveUp();
 		},
 		
-		onRemoveClick: function(){
-			this.model.destroy();
-		},
-
 		onDownClick: function(){
 			this.model.moveDown();
 		},

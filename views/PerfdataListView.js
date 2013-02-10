@@ -15,23 +15,13 @@ define(["./PerfdataView"], function(PerfdataView) {
 			var self = this, $listBody, $removeBtn;
 			
 			$listBody = this.$listBody = $('<ul />');
-			$addBtn = $('<a class="add-btn" href="#"><span></span>Add new value</a>');
 			
 			this.$el.append($listBody);
-			this.$el.append($addBtn);
-			
-			$addBtn.on("click", function(evt){
-				self.onAddClick(evt);
-			});
 			
 			this.collection.on("add", this.onAdd, this);
 			this.collection.on("sort reset", this.reRender, this);
 			
 			this.addAll();
-		},
-		
-		onAddClick: function(){
-			this.collection.create();
 		},
 		
 		onAdd: function(model){
